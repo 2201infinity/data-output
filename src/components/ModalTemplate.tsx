@@ -54,6 +54,7 @@ const ModalInner = styled.div<IModalInnerStyled>`
   right: 0;
   left: 0;
   margin: auto;
+  overflow: auto;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   border-radius: 12px;
