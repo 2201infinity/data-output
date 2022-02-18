@@ -2,8 +2,8 @@ import { css } from "@emotion/react";
 
 export const scrollbar = css`
   &::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 8px;
   }
   &::-webkit-scrollbar-track {
     background-color: white;

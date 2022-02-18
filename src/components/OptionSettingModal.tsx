@@ -9,6 +9,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { scrollbar } from "styles/utilStyles";
+import { css } from "@emotion/react";
 
 interface OptionSettingModalProps {
   isModal: boolean;
@@ -80,21 +81,12 @@ function OptionSettingModal({
         </Droppable>
       </DragDropContext>
 
-      <SelectedKeyBox>
-        {shipmentKeyList
-          .filter((shipmentKey) => shipmentKey.isSelected)
-          .map((shipmentKey) => (
-            <ShipmentKeyItem key={shipmentKey.key}>
-              {shipmentKey.key}
-            </ShipmentKeyItem>
-          ))}
-      </SelectedKeyBox>
-
       <ShipmentKeyBox>
         {shipmentKeyList.map((shipmentKey) => (
           <ShipmentKeyItem
             key={shipmentKey.key}
             onClick={() => onToggleShipmentKeyList(shipmentKey.key)}
+            isSelected={selectedKeyList.indexOf(shipmentKey.key) !== -1}
           >
             {shipmentKey.key}
           </ShipmentKeyItem>
@@ -109,14 +101,19 @@ const SelectedKeyBox = styled.div`
   width: 100%;
   overflow: auto;
   align-items: center;
-  ${scrollbar}
+  border: 1px solid #e6e6e6;
   padding: 10px;
+  margin-bottom: 20px;
+  ${scrollbar}
 `;
 
 const SelectedKeyItem = styled.div`
   font-size: 14px;
   flex-shrink: 0;
   margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 20px;
   cursor: pointer;
 `;
 
@@ -126,11 +123,16 @@ const ShipmentKeyBox = styled.div`
   justify-content: space-between;
 `;
 
-const ShipmentKeyItem = styled.div`
+const ShipmentKeyItem = styled.div<{ isSelected: boolean }>`
   font-size: 14px;
   margin-bottom: 10px;
   width: 132px;
   cursor: pointer;
+  ${({ isSelected }) =>
+    isSelected &&
+    css`
+      color: blue;
+    `}
 `;
 
 export default OptionSettingModal;
