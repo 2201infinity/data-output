@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import ModalTemplate from "./ModalTemplate";
 import useShipmentKeyList from "hooks/useShipmentKeyList";
 import styled from "@emotion/styled";
@@ -8,6 +8,7 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
+import { scrollbar } from "styles/utilStyles";
 
 interface OptionSettingModalProps {
   isModal: boolean;
@@ -18,10 +19,19 @@ function OptionSettingModal({
   isModal,
   onToggleModal,
 }: OptionSettingModalProps): ReactElement {
-  const { shipmentKeyList, onToggleShipmentKey, setShipmentKeyList } =
-    useShipmentKeyList();
+  const shipmentKeyList = useShipmentKeyList();
+  const [selectedKeyList, setSelectedKeyList] = useState<string[]>([]);
 
-  console.log(shipmentKeyList);
+  const onToggleShipmentKeyList = (key: string) => {
+    const index = selectedKeyList.indexOf(key);
+    if (index === -1) {
+      setSelectedKeyList([...selectedKeyList, key]);
+    } else {
+      setSelectedKeyList(
+        selectedKeyList.filter((selectedKey) => selectedKey !== key)
+      );
+    }
+  };
 
   const reorder = (list: any, startIndex: any, endIndex: any) => {
     const result = Array.from(list);
@@ -33,8 +43,8 @@ function OptionSettingModal({
 
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
-    const items = reorder(shipmentKeyList, source.index, destination.index);
-    setShipmentKeyList(items as any);
+    const items = reorder(selectedKeyList, source.index, destination.index);
+    setSelectedKeyList(items as any);
   };
 
   return (
@@ -51,15 +61,15 @@ function OptionSettingModal({
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {shipmentKeyList.map((item, index) => (
-                <Draggable key={item.key} draggableId={item.key} index={index}>
+              {selectedKeyList.map((item, index) => (
+                <Draggable key={item} draggableId={item} index={index}>
                   {(provided) => (
                     <SelectedKeyItem
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      {item.key}
+                      {item}
                     </SelectedKeyItem>
                   )}
                 </Draggable>
@@ -84,7 +94,7 @@ function OptionSettingModal({
         {shipmentKeyList.map((shipmentKey) => (
           <ShipmentKeyItem
             key={shipmentKey.key}
-            onClick={() => onToggleShipmentKey(shipmentKey.key)}
+            onClick={() => onToggleShipmentKeyList(shipmentKey.key)}
           >
             {shipmentKey.key}
           </ShipmentKeyItem>
@@ -99,13 +109,14 @@ const SelectedKeyBox = styled.div`
   width: 100%;
   overflow: auto;
   align-items: center;
+  ${scrollbar}
+  padding: 10px;
 `;
 
 const SelectedKeyItem = styled.div`
   font-size: 14px;
-  margin-bottom: 10px;
-  width: 132px;
   flex-shrink: 0;
+  margin-right: 10px;
   cursor: pointer;
 `;
 
