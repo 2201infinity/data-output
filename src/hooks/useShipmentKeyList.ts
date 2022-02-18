@@ -25,5 +25,6 @@ export default function useShipmentKeyList() {
   return {
     shipmentKeyList,
     onToggleShipmentKey,
+    setShipmentKeyList,
   };
 }
