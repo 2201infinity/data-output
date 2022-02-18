@@ -89,6 +89,8 @@ function OptionSettingModal({
         </Droppable>
       </DragDropContext>
 
+      <NoticeText>화면에 노출될 속성을 드래그로 설정해주세요!</NoticeText>
+
       <ShipmentKeyBox>
         {shipmentKeyList.map((shipmentKey) => (
           <ShipmentKeyItem
@@ -107,6 +109,7 @@ function OptionSettingModal({
 
 const SelectedKeyBox = styled.div`
   display: flex;
+  height: 68px;
   width: 100%;
   overflow: auto;
   align-items: center;
@@ -134,6 +137,13 @@ const SelectedKeyItem = styled.div`
     height: 16px;
     cursor: pointer;
   }
+`;
+
+const NoticeText = styled.div`
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const ShipmentKeyBox = styled.div`
