@@ -119,9 +119,8 @@ const Row = styled.div<{ isClicked: boolean }>`
   }
   font-size: 14px;
   & > div {
-    width: calc((100vw - 24px) / 8);
-    min-width: 110px;
-    ${({ isClicked }) => isClicked && "width: calc((100vw - 24px) / 4)"};
+    width: 110px;
+    ${({ isClicked }) => isClicked && "width: calc((100% - 24px) / 4)"};
   }
 `;
 

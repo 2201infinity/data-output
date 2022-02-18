@@ -54,7 +54,7 @@ const TableHeader = styled.div`
   padding: 10px 0 10px 5px;
   text-align: center;
   & > div {
-    min-width: 110px;
+    width: 110px;
   }
 `;
 
