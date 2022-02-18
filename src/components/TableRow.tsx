@@ -29,31 +29,31 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
     .sort((a, b) => compare(a.id, b.id));
 
   const printData = (startInx: number) => {
-    let temp = startInx;
-    if (temp + 7 > datas.length) {
+    if (startInx + 9 > datas.length) {
       return (
-        <div>
+        <>
           {Object.entries(data)
             .slice(startInx, datas.length)
             .map((e) => {
               const { id, value } = e[1];
               return (
-                <div>
-                  {id} {value}
-                </div>
+                <Info>
+                  <span>{id}</span>
+                  <strong>{value}</strong>
+                </Info>
               );
             })}
-        </div>
+        </>
       );
     }
-    // printData(startInx + 7);
-    while (temp < Object.entries(data).length) {
-      temp = temp + 7;
-      printData(temp);
-    }
+    // // printData(startInx + 7);
+    // while (temp < Object.entries(data).length) {
+    //   temp = temp + 9;
+    //   printData(temp);
+    // }
     return (
       <InfoContainer>
-        {datas.slice(startInx, startInx + 7).map((e) => {
+        {datas.slice(startInx, startInx + 9).map((e) => {
           const { id, value } = e[1];
           return (
             <Info>
@@ -67,7 +67,7 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
   };
 
   return (
-    <Row isClicked={isClicked}>
+    <Row isClicked={isClicked} onClick={onClickButton}>
       {!isClicked ? (
         <>
           {selectedData.map((data) => {
@@ -82,9 +82,19 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
       ) : (
         <>
           {printData(0)}
-          {printData(7)}
-          {printData(14)}
-          {printData(21)}
+          {printData(9)}
+          {printData(18)}
+          <InfoContainer>
+            {printData(27)}
+            {Object.entries(data.desc).map((e) => {
+              return (
+                <Info>
+                  <span>{e[0]}</span>
+                  <strong>{e[1]}</strong>
+                </Info>
+              );
+            })}
+          </InfoContainer>
         </>
       )}
       <Button onClick={onClickButton} clicked={isClicked}>
@@ -96,13 +106,12 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
 
 const Row = styled.div<{ isClicked: boolean }>`
   height: 60px;
-  ${({ isClicked }) => isClicked && "height: 250px"};
+  ${({ isClicked }) => isClicked && "height: 280px"};
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #ecefef;
-  padding-left: 5px;
   text-align: center;
   word-break: break-all;
   &:nth-of-type(odd) {
@@ -110,8 +119,9 @@ const Row = styled.div<{ isClicked: boolean }>`
   }
   font-size: 14px;
   & > div {
-    width: 120px;
-    ${({ isClicked }) => isClicked && "width: 240px"};
+    width: calc((100vw - 24px) / 8);
+    min-width: 110px;
+    ${({ isClicked }) => isClicked && "width: calc((100vw - 24px) / 4)"};
   }
 `;
 
