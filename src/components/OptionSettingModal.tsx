@@ -2,7 +2,12 @@ import React, { ReactElement } from "react";
 import ModalTemplate from "./ModalTemplate";
 import useShipmentKeyList from "hooks/useShipmentKeyList";
 import styled from "@emotion/styled";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
 
 interface OptionSettingModalProps {
   isModal: boolean;
@@ -26,18 +31,9 @@ function OptionSettingModal({
     return result;
   };
 
-  const onDragEnd = (result: any) => {
-    console.log("d");
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-      shipmentKeyList,
-      result.source.index,
-      result.destination.index
-    );
-
+  const onDragEnd = ({ destination, source }: DropResult) => {
+    if (!destination) return;
+    const items = reorder(shipmentKeyList, source.index, destination.index);
     setShipmentKeyList(items as any);
   };
 
@@ -58,13 +54,13 @@ function OptionSettingModal({
               {shipmentKeyList.map((item, index) => (
                 <Draggable key={item.key} draggableId={item.key} index={index}>
                   {(provided) => (
-                    <div
+                    <SelectedKeyItem
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
                       {item.key}
-                    </div>
+                    </SelectedKeyItem>
                   )}
                 </Draggable>
               ))}
@@ -100,7 +96,17 @@ function OptionSettingModal({
 
 const SelectedKeyBox = styled.div`
   display: flex;
+  width: 100%;
+  overflow: auto;
   align-items: center;
+`;
+
+const SelectedKeyItem = styled.div`
+  font-size: 14px;
+  margin-bottom: 10px;
+  width: 132px;
+  flex-shrink: 0;
+  cursor: pointer;
 `;
 
 const ShipmentKeyBox = styled.div`
