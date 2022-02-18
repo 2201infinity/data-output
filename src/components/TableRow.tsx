@@ -27,20 +27,23 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
   const selectedData = values
     .filter((e) => checkedData.includes(e.id))
     .sort((a, b) => compare(a.id, b.id));
-
   const printData = (startInx: number) => {
     if (startInx + 9 > datas.length) {
       return (
         <>
           {Object.entries(data)
-            .slice(startInx, datas.length)
+            .slice(startInx)
             .map((e) => {
               const { id, value } = e[1];
               return (
-                <Info>
-                  <span>{id}</span>
-                  <strong>{value}</strong>
-                </Info>
+                <>
+                  {id && (
+                    <Info>
+                      <span>{id}</span>
+                      <strong>{value}</strong>
+                    </Info>
+                  )}
+                </>
               );
             })}
         </>
