@@ -14,6 +14,8 @@ function OptionSettingModal({
 }: OptionSettingModalProps): ReactElement {
   const { shipmentKeyList, onToggleShipmentKey } = useShipmentKeyList();
 
+  console.log(shipmentKeyList);
+
   return (
     <ModalTemplate
       width={600}
@@ -25,9 +27,12 @@ function OptionSettingModal({
         {shipmentKeyList
           .filter((shipmentKey) => shipmentKey.isSelected)
           .map((shipmentKey) => (
-            <div key={shipmentKey.key}>{shipmentKey.key}</div>
+            <ShipmentKeyItem key={shipmentKey.key}>
+              {shipmentKey.key}
+            </ShipmentKeyItem>
           ))}
       </SelectedKeyBox>
+
       <ShipmentKeyBox>
         {shipmentKeyList.map((shipmentKey) => (
           <ShipmentKeyItem
@@ -42,16 +47,20 @@ function OptionSettingModal({
   );
 }
 
-const SelectedKeyBox = styled.div``;
+const SelectedKeyBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`;
 
 const ShipmentKeyBox = styled.div`
-  font-size: 14px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 `;
 
 const ShipmentKeyItem = styled.div`
+  font-size: 14px;
   margin-bottom: 10px;
   width: 132px;
   cursor: pointer;
