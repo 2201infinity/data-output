@@ -9,6 +9,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { scrollbar } from "styles/utilStyles";
+import CloseIcon from "@mui/icons-material/Close";
 import { css } from "@emotion/react";
 
 interface OptionSettingModalProps {
@@ -48,6 +49,12 @@ function OptionSettingModal({
     setSelectedKeyList(items as any);
   };
 
+  const onDeleteShipmentKey = (key: string) => {
+    setSelectedKeyList(
+      selectedKeyList.filter((selectedKey) => selectedKey !== key)
+    );
+  };
+
   return (
     <ModalTemplate
       width={600}
@@ -70,7 +77,8 @@ function OptionSettingModal({
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      {item}
+                      <span>{item}</span>
+                      <CloseIcon onClick={() => onDeleteShipmentKey(item)} />
                     </SelectedKeyItem>
                   )}
                 </Draggable>
@@ -85,10 +93,11 @@ function OptionSettingModal({
         {shipmentKeyList.map((shipmentKey) => (
           <ShipmentKeyItem
             key={shipmentKey.key}
-            onClick={() => onToggleShipmentKeyList(shipmentKey.key)}
             isSelected={selectedKeyList.indexOf(shipmentKey.key) !== -1}
           >
-            {shipmentKey.key}
+            <span onClick={() => onToggleShipmentKeyList(shipmentKey.key)}>
+              {shipmentKey.key}
+            </span>
           </ShipmentKeyItem>
         ))}
       </ShipmentKeyBox>
@@ -110,11 +119,21 @@ const SelectedKeyBox = styled.div`
 const SelectedKeyItem = styled.div`
   font-size: 14px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
   margin-right: 10px;
   padding: 10px;
   border: 1px solid #e6e6e6;
   border-radius: 20px;
   cursor: pointer;
+  span {
+    margin-right: 4px;
+  }
+  svg {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
 `;
 
 const ShipmentKeyBox = styled.div`
@@ -127,7 +146,10 @@ const ShipmentKeyItem = styled.div<{ isSelected: boolean }>`
   font-size: 14px;
   margin-bottom: 10px;
   width: 132px;
-  cursor: pointer;
+  padding: 5px;
+  span {
+    cursor: pointer;
+  }
   ${({ isSelected }) =>
     isSelected &&
     css`
