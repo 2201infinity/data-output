@@ -139,7 +139,7 @@ export const globalStyles = (
         font-family: "Noto Sans KR", sans-serif;
         letter-spacing: 0.5px;
         min-width: 768px;
-        max-width: 1024px;
+        padding: 20px 30px;
         margin: 0 auto;
       }
       * {

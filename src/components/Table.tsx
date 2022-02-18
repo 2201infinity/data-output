@@ -1,29 +1,43 @@
 import styled from "@emotion/styled";
+import useTableOptionSetting from "hooks/useTableOptionSetting";
+import useToggle from "hooks/useToggle";
 import datas from "utils/data.json";
+import OptionSettingModal from "./OptionSettingModal";
 import { TableRow } from "./TableRow";
 
-const checkedData = [
-  "순번",
-  "출고서파일명",
-  "매핑상태",
-  "주문명",
-  "수취인주소1",
-  "주문수량",
-  "주문번호",
-];
 export const Table = () => {
+  const [isModal, onToggleModal] = useToggle();
+  const {
+    onDeleteShipmentKey,
+    onDragEnd,
+    onToggleShipmentKeyList,
+    selectedKeyList,
+    shipmentKeyList,
+  } = useTableOptionSetting();
+
   return (
     <div>
       <TableHeader>
-        {checkedData.map((tableHeader) => (
+        {selectedKeyList.map((tableHeader) => (
           <div>{tableHeader}</div>
         ))}
-        {/* 여기 span 지우고 필터 버튼 넣으면 될것 같습니다. */}
-        <span></span>
+        <FilterButton onClick={onToggleModal}>d</FilterButton>
       </TableHeader>
       {datas.map((data) => (
-        <TableRow data={data} checkedData={checkedData}></TableRow>
+        <TableRow data={data} checkedData={selectedKeyList}></TableRow>
       ))}
+
+      {isModal && (
+        <OptionSettingModal
+          isModal={isModal}
+          onToggleModal={onToggleModal}
+          onDeleteShipmentKey={onDeleteShipmentKey}
+          onDragEnd={onDragEnd}
+          onToggleShipmentKeyList={onToggleShipmentKeyList}
+          selectedKeyList={selectedKeyList}
+          shipmentKeyList={shipmentKeyList}
+        />
+      )}
     </div>
   );
 };
@@ -42,7 +56,10 @@ const TableHeader = styled.div`
   & > div {
     min-width: 120px;
   }
-  & > span {
-    width: 24px;
-  }
+`;
+
+const FilterButton = styled.span`
+  width: 24px;
+  background-color: blue;
+  cursor: pointer;
 `;

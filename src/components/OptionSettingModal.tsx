@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import ModalTemplate from "./ModalTemplate";
-import useShipmentKeyList from "hooks/useShipmentKeyList";
 import styled from "@emotion/styled";
 import {
   DragDropContext,
@@ -15,46 +14,25 @@ import { css } from "@emotion/react";
 interface OptionSettingModalProps {
   isModal: boolean;
   onToggleModal: () => void;
+  onDeleteShipmentKey: (key: string) => void;
+  onDragEnd: (result: DropResult) => void;
+  onToggleShipmentKeyList: (key: string) => void;
+  selectedKeyList: string[];
+  shipmentKeyList: {
+    key: string;
+    isSelected: boolean;
+  }[];
 }
 
 function OptionSettingModal({
   isModal,
   onToggleModal,
+  onDeleteShipmentKey,
+  onDragEnd,
+  onToggleShipmentKeyList,
+  selectedKeyList,
+  shipmentKeyList,
 }: OptionSettingModalProps): ReactElement {
-  const shipmentKeyList = useShipmentKeyList();
-  const [selectedKeyList, setSelectedKeyList] = useState<string[]>([]);
-
-  const onToggleShipmentKeyList = (key: string) => {
-    const index = selectedKeyList.indexOf(key);
-    if (index === -1) {
-      setSelectedKeyList([...selectedKeyList, key]);
-    } else {
-      setSelectedKeyList(
-        selectedKeyList.filter((selectedKey) => selectedKey !== key)
-      );
-    }
-  };
-
-  const reorder = (list: any, startIndex: any, endIndex: any) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-  };
-
-  const onDragEnd = ({ destination, source }: DropResult) => {
-    if (!destination) return;
-    const items = reorder(selectedKeyList, source.index, destination.index);
-    setSelectedKeyList(items as any);
-  };
-
-  const onDeleteShipmentKey = (key: string) => {
-    setSelectedKeyList(
-      selectedKeyList.filter((selectedKey) => selectedKey !== key)
-    );
-  };
-
   return (
     <ModalTemplate
       width={600}
