@@ -138,6 +138,9 @@ export const globalStyles = (
       body {
         font-family: "Noto Sans KR", sans-serif;
         letter-spacing: 0.5px;
+        min-width: 768px;
+        max-width: 1024px;
+        margin: 0 auto;
       }
       * {
         box-sizing: border-box;

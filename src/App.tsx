@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Table } from "components/Table";
 import React from "react";
 import TempPage from "./pages/TempPage";
 import { globalStyles } from "./styles/globalStyles";
@@ -8,6 +8,7 @@ function App() {
     <div>
       {globalStyles}
       <TempPage /> {/* @Note 모달 테스트용 임시 컴포넌트*/}
+      <Table />
     </div>
   );
 }
