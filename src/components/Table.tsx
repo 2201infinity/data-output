@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import useTableOptionSetting from "hooks/useTableOptionSetting";
+import MenuIcon from "@mui/icons-material/Menu";
 import useToggle from "hooks/useToggle";
 import datas from "utils/data.json";
 import OptionSettingModal from "./OptionSettingModal";
@@ -21,7 +22,9 @@ export const Table = () => {
         {selectedKeyList.map((tableHeader) => (
           <div>{tableHeader}</div>
         ))}
-        <FilterButton onClick={onToggleModal}>d</FilterButton>
+        <FilterButton onClick={onToggleModal}>
+          <MenuIcon />
+        </FilterButton>
       </TableHeader>
       {datas.map((data) => (
         <TableRow data={data} checkedData={selectedKeyList}></TableRow>
@@ -60,6 +63,5 @@ const TableHeader = styled.div`
 
 const FilterButton = styled.span`
   width: 24px;
-  background-color: blue;
   cursor: pointer;
 `;
