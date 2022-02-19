@@ -1,4 +1,4 @@
-export interface Data {
+export interface TableData {
   출고서파일명: DataDetail;
   순번: DataDetail;
   매핑상태: DataDetail;
