@@ -27,6 +27,7 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
   const selectedData = values
     .filter((e) => checkedData.includes(e.id))
     .sort((a, b) => compare(a.id, b.id));
+
   const printData = (startInx: number) => {
     if (startInx + 9 > datas.length) {
       return (
@@ -111,7 +112,8 @@ const Row = styled.div<{ isClicked: boolean }>`
   height: 60px;
   ${({ isClicked }) => isClicked && "height: 280px"};
   position: relative;
-  display: flex;
+  display: inline-flex;
+  min-width: 100%;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #ecefef;
@@ -156,7 +158,7 @@ const Info = styled.div`
   justify-content: space-between;
   align-items: center;
   & > span {
-    width: 46%;
+    margin-left: 25px;
     color: #797979;
   }
   & > strong {

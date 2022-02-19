@@ -20,7 +20,7 @@ export const Table = () => {
     <div>
       <TableHeader>
         {selectedKeyList.map((tableHeader) => (
-          <div>{tableHeader}</div>
+          <RowTitle>{tableHeader}</RowTitle>
         ))}
         <FilterButton onClick={onToggleModal}>
           <MenuIcon />
@@ -50,7 +50,8 @@ const TableHeader = styled.div`
   background-color: #fff;
   z-index: 10;
   top: 0;
-  display: flex;
+  display: inline-flex;
+  min-width: 100%;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #ecefef;
@@ -59,6 +60,11 @@ const TableHeader = styled.div`
   & > div {
     width: 110px;
   }
+`;
+
+const RowTitle = styled.div`
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const FilterButton = styled.span`

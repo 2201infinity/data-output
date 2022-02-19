@@ -141,7 +141,6 @@ export const globalStyles = (
         min-width: 768px;
         padding: 20px 30px;
         margin: 0 auto;
-        padding: 10px 15px;
       }
       * {
         box-sizing: border-box;
