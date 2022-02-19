@@ -17,7 +17,7 @@ export const Table = () => {
   } = useTableOptionSetting();
 
   return (
-    <div>
+    <TableContainer isModal={isModal}>
       <TableHeader>
         {selectedKeyList.map((tableHeader, index) => (
           <RowTitle key={`selectedKey_${index}`}>{tableHeader}</RowTitle>
@@ -46,9 +46,13 @@ export const Table = () => {
           shipmentKeyList={shipmentKeyList}
         />
       )}
-    </div>
+    </TableContainer>
   );
 };
+
+const TableContainer = styled.div<{ isModal: boolean }>`
+  ${({ isModal }) => isModal && "position: fixed;"};
+`;
 
 const TableHeader = styled.div`
   position: sticky;
