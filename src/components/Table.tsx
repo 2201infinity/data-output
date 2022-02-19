@@ -19,15 +19,20 @@ export const Table = () => {
   return (
     <div>
       <TableHeader>
-        {selectedKeyList.map((tableHeader) => (
-          <RowTitle>{tableHeader}</RowTitle>
+        {selectedKeyList.map((tableHeader, index) => (
+          <RowTitle key={`selectedKey_${index}`}>{tableHeader}</RowTitle>
         ))}
+
         <FilterButton onClick={onToggleModal}>
           <MenuIcon />
         </FilterButton>
       </TableHeader>
-      {datas.map((data) => (
-        <TableRow data={data} checkedData={selectedKeyList}></TableRow>
+      {datas.map((data, index) => (
+        <TableRow
+          data={data}
+          key={`data_${index}`}
+          checkedData={selectedKeyList}
+        ></TableRow>
       ))}
 
       {isModal && (
