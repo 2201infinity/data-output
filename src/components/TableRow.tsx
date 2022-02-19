@@ -2,10 +2,10 @@ import styled from "@emotion/styled";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState } from "react";
-import { Data, DataDetail } from "types/data";
+import { TableData, DataDetail } from "types/tableData";
 
 interface TableRowProps {
-  data: Data;
+  data: TableData;
   checkedData: string[];
 }
 
@@ -29,32 +29,6 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
     .sort((a, b) => compare(a.id, b.id));
 
   const printData = (startInx: number) => {
-    if (startInx + 9 > datas.length) {
-      return (
-        <>
-          {Object.entries(data)
-            .slice(startInx)
-            .map((e) => {
-              const { id, value } = e[1];
-              return (
-                <>
-                  {id && (
-                    <Info>
-                      <span>{id}</span>
-                      <strong>{value}</strong>
-                    </Info>
-                  )}
-                </>
-              );
-            })}
-        </>
-      );
-    }
-    // // printData(startInx + 7);
-    // while (temp < Object.entries(data).length) {
-    //   temp = temp + 9;
-    //   printData(temp);
-    // }
     return (
       <InfoContainer>
         {datas.slice(startInx, startInx + 9).map((e) => {
@@ -86,10 +60,11 @@ export const TableRow = ({ data, checkedData }: TableRowProps) => {
       ) : (
         <>
           {printData(0)}
-          {printData(9)}
-          {printData(18)}
+          {printData(10)}
+          {printData(20)}
           <InfoContainer>
-            {printData(27)}
+            <StrongText>출고 신청 정보</StrongText>
+            <Line />
             {Object.entries(data.desc).map((e) => {
               return (
                 <Info>
@@ -129,23 +104,6 @@ const Row = styled.div<{ isClicked: boolean }>`
   }
 `;
 
-// const Status = styled.div<{ status: string }>`
-//   background-color: ${(props) =>
-//     props.status === "주문명매핑성공"
-//       ? "#e5fcf1"
-//       : props.status === "주문명세트지정"
-//       ? "#f8ede1"
-//       : "none"};
-//   padding: 5px 8px;
-//   color: ${(props) =>
-//     props.status === "주문명매핑성공"
-//       ? "#01b74c"
-//       : props.status === "주문명세트지정"
-//       ? "#fca15b"
-//       : "none"};
-//   border-radius: 10px;
-// `;
-
 const Button = styled.button<{ clicked: boolean }>`
   height: 100%;
   padding: 10px 0;
@@ -175,4 +133,13 @@ const InfoContainer = styled.div`
   & ~ & {
     border-left: 1px solid #ecefef;
   }
+`;
+
+const Line = styled.div`
+  height: 1px;
+  background-color: #ecefef;
+`;
+
+const StrongText = styled.strong`
+  font-weight: bold;
 `;
